@@ -1,5 +1,6 @@
 package("ElaWidgetTools")
-    set_urls("https://github.com/Liniyous/ElaWidgetTools.git")
+    set_urls("https://github.com/Liniyous/ElaWidgetTools.git",
+            "https://gh-proxy.com/https://github.com/Liniyous/ElaWidgetTools.git")
     set_description("ElaWidgetTools is a set of tools for ElaWidget")
     set_license("MIT")
     
