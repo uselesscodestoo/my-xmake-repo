@@ -1,10 +1,12 @@
-package("ElaWidgetTools")
+package("ela-widget-tools")
     set_urls("https://github.com/Liniyous/ElaWidgetTools.git",
             "https://gh-proxy.com/https://github.com/Liniyous/ElaWidgetTools.git")
     set_description("ElaWidgetTools is a set of tools for ElaWidget")
     set_license("MIT")
     
     add_versions("2026.4.9", "2488f5d4a6bc65154d17aaaa3dc4714ba0ec3aa3")
+
+    add_patches("2026.4.9", "patches/2026.4.9/fix-windows-moc.patch", "3f47618f99e32f56721b33bf31058b569e3c0d2555ffb6c8092e2014641e96ab")
 
     on_install(function (package)
         local sourcedir = package:cachedir()
@@ -28,12 +30,11 @@ package("ElaWidgetTools")
         })
 
         io.writefile("xmake.lua",[[
-            includes("@builtin/check")
             add_rules("mode.debug", "mode.release")
             if is_plat("windows") then
                 add_cxflags("/utf-8")
             end
-            target("ElaWidgetTools")
+            target("ela-widget-tools")
                 set_kind("$(kind)")
                 add_rules("qt.$(kind)")
                 set_languages("c++17")

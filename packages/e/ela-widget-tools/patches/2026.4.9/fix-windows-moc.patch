@@ -1,0 +1,104 @@
+diff --git a/ElaWidgetTools/DeveloperComponents/ElaDxgi.h b/ElaWidgetTools/DeveloperComponents/ElaDxgi.h
+index 4eb5da8..30a20d0 100644
+--- a/ElaWidgetTools/DeveloperComponents/ElaDxgi.h
++++ b/ElaWidgetTools/DeveloperComponents/ElaDxgi.h
+@@ -9,10 +9,13 @@
+ #include <dxgi1_6.h>
+ 
+ #include "ElaProperty.h"
++#endif
+ 
+ class ElaDxgi : public QObject
+ {
+     Q_OBJECT
++
++#ifdef Q_OS_WIN
+     Q_PRIVATE_CREATE(QStringList, DxDeviceList)
+     Q_PRIVATE_CREATE(QStringList, OutputDeviceList)
+     Q_PRIVATE_CREATE(int, DxDeviceID);
+@@ -47,6 +50,6 @@ private:
+     int _descHeight{0};
+     void releaseInterface();
+     void cpuSleep(qint64 usec);
+-};
+ #endif
++};
+ #endif // ELADXGI_H
+diff --git a/ElaWidgetTools/DeveloperComponents/ElaWinShadowHelper.h b/ElaWidgetTools/DeveloperComponents/ElaWinShadowHelper.h
+index f8e9893..f40ed12 100644
+--- a/ElaWidgetTools/DeveloperComponents/ElaWinShadowHelper.h
++++ b/ElaWidgetTools/DeveloperComponents/ElaWinShadowHelper.h
+@@ -16,9 +16,13 @@
+ #define Win11_22H2 "10.0.22621"
+ 
+ #define eWinHelper ElaWinShadowHelper::getInstance()
++#endif
++
+ class ElaWinShadowHelper : public QObject
+ {
+     Q_OBJECT
++    
++#ifdef Q_OS_WIN
+     Q_PRIVATE_CREATE(bool, IsWinVersionGreater10)
+     Q_PRIVATE_CREATE(bool, IsWinVersionGreater11)
+     Q_SINGLETON_CREATE(ElaWinShadowHelper)
+@@ -149,7 +153,7 @@ private:
+     GetSystemMetricsForDpiFunc _getSystemMetricsForDpi{nullptr};
+     RTL_OSVERSIONINFOW _windowsVersion{};
+     void _externWindowMargins(HWND hwnd);
++#endif
+ };
+ 
+-#endif
+ #endif // ELAWINSHADOWHELPER_H
+diff --git a/ElaWidgetTools/ElaDxgiManager.h b/ElaWidgetTools/ElaDxgiManager.h
+index 44ebf86..962236e 100644
+--- a/ElaWidgetTools/ElaDxgiManager.h
++++ b/ElaWidgetTools/ElaDxgiManager.h
+@@ -7,9 +7,12 @@
+ #include "ElaSingleton.h"
+ 
+ class ElaDxgiManagerPrivate;
++#endif
++
+ class ELA_EXPORT ElaDxgiManager : public QObject
+ {
+     Q_OBJECT
++#ifdef Q_OS_WIN
+     Q_Q_CREATE(ElaDxgiManager)
+     Q_SINGLETON_CREATE_H(ElaDxgiManager);
+ 
+@@ -53,6 +56,6 @@ public:
+ 
+ protected:
+     void paintEvent(QPaintEvent* event) override;
+-};
+ #endif
++};
+ #endif // ELADXGIMANAGER_H
+diff --git a/ElaWidgetTools/private/ElaDxgiManagerPrivate.h b/ElaWidgetTools/private/ElaDxgiManagerPrivate.h
+index 0196d63..97d17ab 100644
+--- a/ElaWidgetTools/private/ElaDxgiManagerPrivate.h
++++ b/ElaWidgetTools/private/ElaDxgiManagerPrivate.h
+@@ -6,9 +6,13 @@
+ #include <QImage>
+ class ElaDxgi;
+ class ElaDxgiManager;
++#endif
++
+ class ElaDxgiManagerPrivate : public QObject
+ {
+     Q_OBJECT
++    
++#ifdef Q_OS_WIN
+     Q_D_CREATE(ElaDxgiManager)
+ public:
+     explicit ElaDxgiManagerPrivate(QObject* parent = nullptr);
+@@ -35,6 +39,6 @@ private:
+     ElaDxgiManager* _dxgiManager{nullptr};
+     bool _isSyncGrabSize{false};
+     QImage _img;
+-};
+ #endif
++};
+ #endif // ELADXGIMANAGERPRIVATE_H
