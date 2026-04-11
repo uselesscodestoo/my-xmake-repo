@@ -6,7 +6,7 @@ package("ela-widget-tools")
     
     add_versions("2026.4.9", "2488f5d4a6bc65154d17aaaa3dc4714ba0ec3aa3")
 
-    add_patches("2026.4.9", "patches/2026.4.9/fix-windows-moc.patch", "20152c672528b7cfe763fe273fa03357f4cc5a17e49064c75c8fe0534531f441")
+    add_patches("2026.4.9", "patches/2026.4.9/fix-windows-moc.patch", "b531b581497076f67e3fa06b17d89e84f5e9faa9f9d89279b031307b688f9838")
 
     on_install(function (package)
         local sourcedir = package:cachedir()

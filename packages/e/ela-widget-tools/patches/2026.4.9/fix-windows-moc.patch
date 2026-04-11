@@ -52,15 +52,19 @@ index f8e9893..f40ed12 100644
 -#endif
  #endif // ELAWINSHADOWHELPER_H
 diff --git a/ElaWidgetTools/ElaDxgiManager.h b/ElaWidgetTools/ElaDxgiManager.h
-index 44ebf86..962236e 100644
+index 44ebf86..49da90d 100644
 --- a/ElaWidgetTools/ElaDxgiManager.h
 +++ b/ElaWidgetTools/ElaDxgiManager.h
-@@ -7,9 +7,12 @@
+@@ -2,7 +2,7 @@
+ #define ELADXGIMANAGER_H
+ 
+ #include <QWidget>
+-#ifdef Q_OS_WIN
++#include <QObject>
+ #include "ElaProperty.h"
  #include "ElaSingleton.h"
  
- class ElaDxgiManagerPrivate;
-+#endif
-+
+@@ -10,6 +10,7 @@ class ElaDxgiManagerPrivate;
  class ELA_EXPORT ElaDxgiManager : public QObject
  {
      Q_OBJECT
@@ -68,6 +72,21 @@ index 44ebf86..962236e 100644
      Q_Q_CREATE(ElaDxgiManager)
      Q_SINGLETON_CREATE_H(ElaDxgiManager);
  
+@@ -37,12 +38,14 @@ public:
+     int getTimeoutMsValue() const;
+ Q_SIGNALS:
+     Q_SIGNAL void grabImageUpdate(QImage img);
++#endif
+ };
+ 
+ class ElaDxgiScreenPrivate;
+ class ELA_EXPORT ElaDxgiScreen : public QWidget
+ {
+     Q_OBJECT
++#ifdef Q_OS_WIN
+     Q_Q_CREATE(ElaDxgiScreen)
+     Q_PROPERTY_CREATE_Q_H(int, BorderRadius)
+ public:
 @@ -53,6 +56,6 @@ public:
  
  protected:
@@ -77,7 +96,7 @@ index 44ebf86..962236e 100644
 +};
  #endif // ELADXGIMANAGER_H
 diff --git a/ElaWidgetTools/private/ElaDxgiManagerPrivate.h b/ElaWidgetTools/private/ElaDxgiManagerPrivate.h
-index 0196d63..97d17ab 100644
+index 0196d63..6adb934 100644
 --- a/ElaWidgetTools/private/ElaDxgiManagerPrivate.h
 +++ b/ElaWidgetTools/private/ElaDxgiManagerPrivate.h
 @@ -6,9 +6,13 @@
@@ -94,7 +113,22 @@ index 0196d63..97d17ab 100644
      Q_D_CREATE(ElaDxgiManager)
  public:
      explicit ElaDxgiManagerPrivate(QObject* parent = nullptr);
-@@ -35,6 +39,6 @@ private:
+@@ -19,12 +23,14 @@ private:
+     bool _isAllowedGrabScreen{false};
+     ElaDxgi* _dxgi{nullptr};
+     QThread* _dxgiThread{nullptr};
++#endif
+ };
+ 
+ class ElaDxgiScreen;
+ class ElaDxgiScreenPrivate : public QObject
+ {
+     Q_OBJECT
++#ifdef Q_OS_WIN
+     Q_D_CREATE(ElaDxgiScreen)
+     Q_PROPERTY_CREATE_D(int, BorderRadius)
+ public:
+@@ -35,6 +41,6 @@ private:
      ElaDxgiManager* _dxgiManager{nullptr};
      bool _isSyncGrabSize{false};
      QImage _img;
